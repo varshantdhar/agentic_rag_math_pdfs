@@ -1,0 +1,40 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyo
+*.log
+
+# Virtual environments
+venv/
+.env
+.env.*
+
+# FAISS + embeddings
+vectorstore/
+*.pkl
+*.npy
+*.npz
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Streamlit state
+.streamlit/
+
+# Jupyter kernel & temp files
+*.ipynb-jupyter
+*.swp
+*.bak
+
+# VSCode/IDE files
+.vscode/
+.idea/
+
+# PDF books
+.pdf

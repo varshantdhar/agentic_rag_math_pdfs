@@ -1,0 +1,17 @@
+# Core RAG
+langchain
+langgraph
+sentence-transformers
+faiss-cpu
+
+# LLMs (local or remote)
+transformers
+torch
+
+# PDF + Math
+pdfplumber
+sympy
+
+# CLI/UI
+streamlit
+python-dotenv
