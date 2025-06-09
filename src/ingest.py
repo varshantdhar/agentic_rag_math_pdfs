@@ -10,11 +10,22 @@ import pickle
 import logging
 logging.getLogger("pdfminer").setLevel(logging.ERROR)
 
+import re
+
+def clean_text(text):
+    # Fix camelCase runs like "asformulatedintheprecedingsections"
+    text = re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', text)
+    # Normalize excessive whitespace and newlines
+    text = text.replace('\n', ' ')
+    text = re.sub(r'\s{2,}', ' ', text)
+    return text.strip()
+
 def extract_text_from_pdf(pdf_path: str) -> str:
     text = ""
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
-            text += page.extract_text() or ""
+            page_text = page.extract_text() or ""
+            text += clean_text(page_text) + "\n"
     return text
 
 def chunk_text(text : str):

@@ -17,7 +17,12 @@ def query_rag_index(query: str, top_k=5):
 
 if __name__ == "__main__":
     query = input("Ask a question: ")
-    results = query_rag_index(query)
+    index, chunks, model = load_index()
+    q_embedding = model.encode([query])
+    D, I = index.search(q_embedding, 5)
+
     print("\nTop Matches:\n")
-    for i, r in enumerate(results, 1):
-        print(f"[{i}] {r[:500]}\n{'-'*60}")
+    for rank, (score, i) in enumerate(zip(D[0], I[0]), 1):
+        print(f"[{rank}] Score: {score:.4f}")
+        print(chunks[i][:500])  # preview first 500 characters
+        print("-" * 60)
