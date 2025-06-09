@@ -7,6 +7,9 @@ import faiss
 import os
 import pickle
 
+import logging
+logging.getLogger("pdfminer").setLevel(logging.ERROR)
+
 def extract_text_from_pdf(pdf_path: str) -> str:
     text = ""
     with pdfplumber.open(pdf_path) as pdf:
@@ -34,7 +37,7 @@ def build_faiss_index(embeddings, chunks, save_path="vectorstore"):
 
     os.makedirs(save_path, exist_ok=True)
     faiss.write_index(index, f"{save_path}/faiss.index")
-    with open("f{save_path}/chunks.pkl", "wb") as f:
+    with open(f"{save_path}/chunks.pkl", "wb") as f:
         pickle.dump(chunks, f)
 
 def pipeline(pdf_dir: str):
@@ -47,3 +50,7 @@ def pipeline(pdf_dir: str):
 
     embeddings = embed_chunks(all_chunks)
     build_faiss_index(embeddings, all_chunks)
+
+if __name__ == "__main__":
+    pdf_dir = os.getenv("PDF_DIR", "data/raw_pdfs")
+    pipeline(pdf_dir)
